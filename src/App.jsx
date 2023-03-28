@@ -8,35 +8,37 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config";
 import { AuthContext } from "./contexts/AuthContext";
+import { AdicionarLivro } from "./pages/AdicionarLivro/AdicionarLivro";
 
 export function App() {
-
-  const [usuarioLogado, SetUsuarioLogado] = useState(null);
+  const [usuarioLogado, setUsuarioLogado] = useState(null);
 
   useEffect(() => {
     // Monitorar/detectar o usuário conectado
-    onAuthStateChanged(auth, (user) => { // onAuthStateChanged serve para saber se  o usuário esta logado ou não
+    // Fica sabendo quando loga/desloga
+    onAuthStateChanged(auth, (user) => {
       // user é nulo = deslogado
       // user tem objeto = logado
-      SetUsuarioLogado(user);
-    })
-    // Esse efeito irá rodar apenas uma vez
-    // Quando o app for renderizado
-  }, [])
+      setUsuarioLogado(user);
+    });
 
+    // Esse efeito irá rodar apenas uma vez
+    // Quando o App for renderizado/inicializado
+  }, []);
 
   return (
     <>
       <AuthContext.Provider value={usuarioLogado}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Root />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastro" element={<Cadastro />} />
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Root />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/livros/adicionar" element={<AdicionarLivro />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+          </Routes>
+        </BrowserRouter>
       </AuthContext.Provider>
       <Toaster />
     </>

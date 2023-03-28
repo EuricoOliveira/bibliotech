@@ -5,17 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../firebase/auth";
 
 export function Menu() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function onLogout() {
     logout().then(() => {
-      navigate("/login")
-    })
+      navigate("/login");
+    });
   }
 
-
   return (
-    <Navbar bg="danger" variant="light" expand="lg">
+    <Navbar bg="success" variant="light" expand="lg">
       <Container fluid>
         <Navbar.Brand>
           <Link to="/">
@@ -27,6 +26,9 @@ export function Menu() {
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/">
               Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/livros/adicionar">
+              Adicionar Livro
             </Nav.Link>
             <Nav.Link onClick={onLogout}>
               <i className="bi bi-box-arrow-right"></i>
